@@ -11,8 +11,6 @@ bot.on('message', message => {
     // Our bot needs to know if it will execute a command
     // It will listen for messages that will start with `!`
     if (message.content.substring(0, 1) == '!') {
-        console.log(message);
-        console.log(bot);
         switch (message.content) {
             // !ping
             case '!ping':
@@ -21,13 +19,29 @@ bot.on('message', message => {
             case '!pickGame':
                 message.channel.send(gameChooser([true, true, true, true, true]))
                 break;
-                // Just add any case commands if you want to..
+            // Just add any case commands if you want to..
             case '!online':
-                console.log(bot.users);
+                bot.users.cache.forEach(user => {
+                    console.log('user', user.username);
+                    console.log('presence', user.presence);
+                })
+                const online = bot.users.cache.filter(user => (user.presence.status === "online" || user.presence.status === "idle") && user.username !== 'Game Choosing Bot');
+                console.log(online);
+                online.forEach(async onlineUser => {
+                    try {
+                        console.log(onlineUser.username);
+                        const dm = await onlineUser.createDM()
+                        console.log('dm', dm);
+                        dm.send(`@${onlineUser.username}`);
+                    } catch (ex) {
+
+                    }
+
+                });
                 break;
         }
     }
 });
-bot.on('ready', () => console.log(bot.channels.cache.each(channel => console.log(channel))));
+bot.on('ready', () => console.log('started'));
 
 bot.login(process.env.SECRET);
