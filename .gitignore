@@ -1,2 +1,4 @@
 .env
 node_modules/
+quick-start-combined.log
+discord-errors.log
