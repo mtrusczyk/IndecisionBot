@@ -58,9 +58,7 @@ try {
                         try {
                             if ((user.presence.status === "online" || user.presence.status === "idle") && !user.displayName.toLocaleLowerCase().includes('bot')) {
                                 const dm = await user.createDM();
-                                if (user.displayName.toLocaleLowerCase() === "jamil") {
-                                    dm.send(navy.message);
-                                } else if (user.displayName.toLocaleLowerCase() === message.author.username.toLocaleLowerCase()) {
+                                if (user.displayName.toLocaleLowerCase() === message.author.username.toLocaleLowerCase()) {
                                     dm.send("The task started successfully");
                                 } else {
                                     dm.send(`@${user.displayName} from ${message.guild} want's to know if you're online`);
