@@ -61,7 +61,7 @@ try {
                                 if (user.displayName.toLocaleLowerCase() === message.author.username.toLocaleLowerCase()) {
                                     dm.send("The task started successfully");
                                 } else {
-                                    dm.send(`@${user.displayName} from ${message.guild} want's to know if you're online`);
+                                    dm.send(`@${message.author.username} from ${message.guild} want's to know if you're online`);
                                 }
                             }
                         } catch (ex) {
