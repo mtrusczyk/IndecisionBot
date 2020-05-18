@@ -2,6 +2,9 @@ class fivePeople {
     everyone = [
         'Killing Floor 2',
         'Team Fortress 2',
+        'Monster Hunter: World',
+        'Apex Legends',
+        'Deathgarden'
     ]
 }
 

@@ -1,9 +1,6 @@
 var Discord = require('discord.js');
 const { createLogger, format, transports } = require('winston');
-const env = require('dotenv').config();
 const gameChooser = require('./game-chooser/game-chooser').gameChooser;
-
-var navy = require('./navyseal.json');
 
 // initialize logger
 const logger = createLogger({
