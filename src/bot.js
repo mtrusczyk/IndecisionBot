@@ -41,12 +41,18 @@ try {
         // Our bot needs to know if it will execute a command
         // It will listen for messages that will start with `!`
         if (message.content.substring(0, 1) == '!') {
-            switch (message.content) {
+            switch (message.content.toLocaleLowerCase()) {
                 // !ping
                 case '!ping':
                     message.channel.send('pong');
                     break;
-                case '!pickGame':
+                case '!help':
+                    message.channel.send(`Currently supported commands
+                    !pickGame: Suggests a game to play
+                    !online:   Messages all online users asking to join the channel
+                    !pong:     Replies with 'pong'`);
+                    break;
+                case '!pickgame':
                     message.channel.send(gameChooser([true, true, true, true, true]))
                     break;
                 // Just add any case commands if you want to..
