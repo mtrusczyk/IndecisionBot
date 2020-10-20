@@ -104,7 +104,7 @@ try {
                     // Game list will be everything after the space 
                     gameStr = message.content.toLocaleLowerCase();
                     if(gameStr.indexOf(" ") != -1){
-                      gameStr = gameStr.substring(gameStr.indexOf(" ")+1, gameStr.length);
+                      gameStr = gameStr.substring(gameStr.indexOf(" ")+1);
                     } else {
                       gameStr = "";
                     }
