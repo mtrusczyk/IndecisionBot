@@ -8,4 +8,5 @@ services:
             - .env
         volumes:
             - './src:/app'
+            - './local-db:/local-db'
         restart: unless-stopped

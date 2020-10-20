@@ -1,6 +1,8 @@
 var Discord = require('discord.js');
 const { createLogger, format, transports } = require('winston');
 const gameChooser = require('./game-chooser/game-chooser').gameChooser;
+const updateUsersGames = require('./game-chooser/game-chooser').updateUsersGames;
+const deleteAllPlayerGames = require('./game-chooser/game-chooser').deleteAllPlayerGames;
 
 // initialize logger
 const logger = createLogger({
@@ -41,7 +43,15 @@ try {
         // Our bot needs to know if it will execute a command
         // It will listen for messages that will start with `!`
         if (message.content.substring(0, 1) == '!') {
-            switch (message.content.toLocaleLowerCase()) {
+            // Split the input if it contains a space to support giving
+            // arguments to a command
+            command = message.content
+            if(command.indexOf(' ') != -1) {
+               command =  command.substring(0,command.indexOf(' '));
+            }
+            console.log(command);
+            command = command.toLocaleLowerCase()
+            switch (command) {
                 // !ping
                 case '!ping':
                     message.channel.send('pong');
@@ -49,11 +59,25 @@ try {
                 case '!help':
                     message.channel.send(`Currently supported commands
                     !pickGame: Suggests a game to play
+                    !myGames:  Set the games you want to play. Seperate each game by comma
+                    !deleteAllMyGames: Deletes user's game list from database
                     !online:   Messages all online users asking to join the channel
                     !pong:     Replies with 'pong'`);
                     break;
                 case '!pickgame':
-                    message.channel.send(gameChooser([true, true, true, true, true]))
+                    // Pick a game for the members in a voice channel
+                    const voiceChannel = message.member.voice.channel;
+                    if(!voiceChannel){
+                        return message.channel.send("Please join voice channel");
+                    }
+                    vcUsers = [];
+                    voiceChannel.members.each((user) =>{
+                      vcUsers.push(user.user.username);
+                    });
+                    gameChooser(vcUsers).then(result => {
+                      console.log("return from gameChooser: " + result);
+                      message.channel.send(result);
+                    });
                     break;
                 // Just add any case commands if you want to..
                 case '!online':
@@ -73,6 +97,27 @@ try {
                                 message: ex
                             });
                         }
+                    });
+                    break;
+                case '!mygames':
+                    userName = message.author.username;
+                    // Game list will be everything after the space 
+                    gameStr = message.content.toLocaleLowerCase();
+                    if(gameStr.indexOf(" ") != -1){
+                      gameStr = gameStr.substring(gameStr.indexOf(" ")+1, gameStr.length);
+                    } else {
+                      gameStr = "";
+                    }
+                    updateUsersGames(userName, gameStr).then(function(result) {
+                      message.channel.send(userName + "'s Games are: " + result.row);
+                    }, function(err){
+                      console.log(err)
+                    });
+                    break;
+                case '!deleteallmygames':
+                    userName = message.author.username;
+                    deleteAllPlayerGames(userName).then(function(result) {
+                      message.channel.send("Deleted "+userName + "'s data from database");
                     });
                     break;
                 case '!almond':
