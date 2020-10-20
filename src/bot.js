@@ -70,10 +70,7 @@ try {
                     if(!voiceChannel){
                         return message.channel.send("Please join voice channel");
                     }
-                    vcUsers = [];
-                    voiceChannel.members.each((user) =>{
-                      vcUsers.push(user.user.username);
-                    });
+                    vcUsers = voiceChannel.members.map(user => user.user.username);
                     gameChooser(vcUsers).then(result => {
                       console.log("return from gameChooser: " + result);
                       message.channel.send(result);
