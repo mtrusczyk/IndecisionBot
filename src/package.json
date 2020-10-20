@@ -12,7 +12,8 @@
   "dependencies": {
     "discord.js": "^12.1.1",
     "dotenv": "^8.2.0",
-    "winston": "^3.2.1"
+    "winston": "^3.2.1",
+    "sqlite3": "^5.0.0"
   },
   "devDependencies": {
     "eslint": "^6.8.0"
