@@ -62,7 +62,7 @@ try {
                     !myGames:  Set the games you want to play. Seperate each game by comma
                     !deleteAllMyGames: Deletes user's game list from database
                     !online:   Messages all online users asking to join the channel
-                    !pong:     Replies with 'pong'`);
+                    !ping:     Replies with 'pong'`);
                     break;
                 case '!pickgame':
                     // Pick a game for the members in a voice channel
