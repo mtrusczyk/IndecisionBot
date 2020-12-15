@@ -15,7 +15,7 @@ const logger = createLogger({
         format.splat(),
         format.json()
     ),
-    defaultMeta: { service: 'your-service-name' },
+    defaultMeta: { service: 'IndecisionBot' },
     transports: [
         //
         // - Write to all logs with level `info` and below to `quick-start-combined.log`.
@@ -46,8 +46,8 @@ try {
             // Split the input if it contains a space to support giving
             // arguments to a command
             command = message.content
-            if(command.indexOf(' ') != -1) {
-               command =  command.substring(0,command.indexOf(' '));
+            if (command.indexOf(' ') != -1) {
+                command = command.substring(0, command.indexOf(' '));
             }
             console.log(command);
             command = command.toLocaleLowerCase()
@@ -67,13 +67,13 @@ try {
                 case '!pickgame':
                     // Pick a game for the members in a voice channel
                     const voiceChannel = message.member.voice.channel;
-                    if(!voiceChannel){
+                    if (!voiceChannel) {
                         return message.channel.send("Please join voice channel");
                     }
                     vcUsers = voiceChannel.members.map(user => user.user.username);
                     gameChooser(vcUsers).then(result => {
-                      console.log("return from gameChooser: " + result);
-                      message.channel.send(result);
+                        console.log("return from gameChooser: " + result);
+                        message.channel.send(result);
                     });
                     break;
                 // Just add any case commands if you want to..
@@ -81,6 +81,7 @@ try {
                     message.channel.members.each(async (user) => {
                         try {
                             if ((user.presence.status === "online" || user.presence.status === "idle") && !user.displayName.toLocaleLowerCase().includes('bot')) {
+
                                 const dm = await user.createDM();
                                 if (user.displayName.toLocaleLowerCase() === message.author.username.toLocaleLowerCase()) {
                                     dm.send("The task started successfully");
@@ -100,21 +101,21 @@ try {
                     userName = message.author.username;
                     // Game list will be everything after the space 
                     gameStr = message.content.toLocaleLowerCase();
-                    if(gameStr.indexOf(" ") != -1){
-                      gameStr = gameStr.substring(gameStr.indexOf(" ")+1);
+                    if (gameStr.indexOf(" ") != -1) {
+                        gameStr = gameStr.substring(gameStr.indexOf(" ") + 1);
                     } else {
-                      gameStr = "";
+                        gameStr = "";
                     }
-                    updateUsersGames(userName, gameStr).then(function(result) {
-                      message.channel.send(userName + "'s Games are: " + result.row);
-                    }, function(err){
-                      console.log(err)
+                    updateUsersGames(userName, gameStr).then(function (result) {
+                        message.channel.send(userName + "'s Games are: " + result.row);
+                    }, function (err) {
+                        console.log(err)
                     });
                     break;
                 case '!deleteallmygames':
                     userName = message.author.username;
-                    deleteAllPlayerGames(userName).then(function(result) {
-                      message.channel.send("Deleted "+userName + "'s data from database");
+                    deleteAllPlayerGames(userName).then(function (result) {
+                        message.channel.send("Deleted " + userName + "'s data from database");
                     });
                     break;
                 case '!almond':

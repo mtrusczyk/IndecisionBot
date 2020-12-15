@@ -2,3 +2,4 @@
 node_modules/
 quick-start-combined.log
 discord-errors.log
+src/local-db
